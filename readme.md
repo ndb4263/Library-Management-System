@@ -1,3 +1,5 @@
+A real-time library management website enabling effortless book borrowing, returns, and timely notifications for due dates and overdue fees. Developed a universal search feature allowing instant access to information on any author or book.
+
 Step 1 : Install flask and virtualenv
 pip install flask
 pip install flask-mysqldb
