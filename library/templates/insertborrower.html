@@ -1,0 +1,87 @@
+<!-- Search Bar -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+
+<body>
+
+    <div class="d-flex justify-content-between p-3 bg-light shadow-sm border sticky-top">
+        <h4>
+            Manage Borrower
+        </h4>
+    </div>
+    <div class="container-fluid">
+        <div class="row my-4">
+            <div class="col-md-4 offset-md-4">
+                {% if msg %}
+                <div class="alert alert-success text-center mb-3">
+                    <h5>{{msg}}</h5>
+                </div>
+                {% endif %}
+                <form method="POST">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="ssn" class="lead">SSN:</label><br>
+                            <input type="text" id="ssn" name="ssn" required class="form-control"><br>
+                        </div>
+                        <div>
+                            <label for="name" class="lead">Name:</label><br>
+                            <input type="text" id="name" name="name" required class="form-control"><br>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="address" class="lead">Address:</label><br>
+                            <input type="text" id="address" name="address" required class="form-control"><br>
+                        </div>
+                        <div>
+                            <label for="phone" class="lead">Phone:</label><br>
+                            <input type="text" id="phone" name="phone" required class="form-control"><br>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <input class="btn btn-success me-2" type="submit" name="insert" value="ADD">
+                        <input class="btn btn-danger" type="submit" name="insert" value="DELETE">
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if data %}
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="table-responsive mt-5 mb-5 pb-5 pt-5">
+                    <table class="table table-bordered table-striped rounded">
+                        <tr>
+                            <th>CARD ID</th>
+                            <th>SSN</th>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                        </tr>
+                        {% for item in data %}
+                        <tr>
+                            <td> {{item[0]}} </td>
+                            <td> {{item[1]}} </td>
+                            <td> {{item[2]}} </td>
+                            <td> {{item[3]}} </td>
+                            <td> {{item[4]}} </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+
+</body>
+
+</html>

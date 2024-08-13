@@ -1,0 +1,133 @@
+<!-- Search Bar -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js"
+        integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/static/index.css">
+</head>
+
+<body>
+    <div class="d-flex justify-content-between p-3 bg-light shadow-sm border sticky-top">
+        <h4>
+            Fines
+        </h4>
+        
+        <form method="POST">
+            <input class="btn btn-secondary" type="submit" name="search" value="Refresh">
+        </form>
+    </div>
+    <div class="col-lg-8 offset-lg-2 border-bottom py-4">
+        <h3>Fine Dues</h3>
+        <hr/>
+        <div class="table-responsive  mb-5 pb-5">
+            <table class="table table-bordered table-striped rounded">
+                <tr>
+                    <th>Loan ID</th>
+                    <th>Date Out</th>
+                    <th>Due Date</th>
+                    <th>Date IN</th>
+                    <th>Fine</th>
+                    <th>Amount Received</th>
+
+                </tr>
+                {% for item in data %}
+                <tr>
+                    <td> {{item[0]}} </td>
+                    <td> {{item[1]}} </td>
+                    <td> {{item[2]}} </td>
+                    <td> {{item[3]}} </td>
+                    <td> {{item[4]}} </td>
+                    <td>
+                        <!-- <select name="paid" id="paid">
+                            <option value="yes">YES</option>
+                            <option value="no" selected>NO</option>                        
+                        </select> -->
+                        {% if item[5] == 1 %}
+                        YES
+                        {% else %}
+                        <input type="checkbox" name="paid" value="{{item[0]}}" onchange="updateFineList(this)">
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="text-end">
+                <button class="btn btn-success" type="button" onclick="clearFines()"> Update </button>
+            </div>
+        </div>
+        <div class="table-responsive mt-5 mb-5 pb-5">
+            <h3>Recent Fines Paid</h3>
+            <hr/>
+            <table class="table table-bordered table-striped rounded">
+                <tr>
+                    <th>Loan ID</th>
+                    <th>Fine Amount</th>
+                    <th>Paid</th>
+
+                </tr>
+                {% for item in data1 %}
+                <tr>
+                    <td> {{item[0]}} </td>
+                    <td> $ {{item[1]}} </td>
+                    <td> {{item[2]}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="table-responsive mt-5 mb-5">
+            <h3>Total Fines By Card_ID</h3>
+            <hr/>
+            <table class="table table-bordered table-striped rounded">
+                <tr>
+                    <th>Card_ID</th>
+                    <th>Total Fine Amount</th>
+                </tr>
+                {% for item in data2 %}
+                <tr>
+                    <td> {{item[0]}} </td>
+                    <td> $ {{item[1]}} </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    var updateList = [];
+    const updateFineList = (element) => {
+        if (updateList.includes(element.value)) {
+            updateList.splice(updateList.indexOf(element.value), 1)
+        }
+        else {
+            updateList.push(element.value)
+        }
+    }
+    const clearFines = () => {
+        const payload = {
+            loanIds: updateList
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        axios.post("http://127.0.0.1:5000/clear_fines", payload, config)
+            .then((response) => {
+
+            })
+            .catch((err) => {
+                alert(err.response.data)
+            })
+        console.log(updateList);
+    }
+</script>
