@@ -16,11 +16,17 @@ Step 5 : Run Flask
 flask run --reload --debugger
 
 Step 6 : Open localhost website
+
 http://127.0.0.1:5000/search
+
 http://127.0.0.1:5000/borrow
+
 http://127.0.0.1:5000/checkin
+
 http://127.0.0.1:5000/fine
+
 http://127.0.0.1:5000/insertborrower
+
 http://127.0.0.1:5000/insertbooks
  
 
